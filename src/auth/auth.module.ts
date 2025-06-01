@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { DatabaseModule } from 'src/database/database.module';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { TokenBlacklistGuard } from './guards/token-blacklist.guard';
 
 interface EnvConfig {
   JWT_SECRET: string;
@@ -20,7 +21,7 @@ interface EnvConfig {
 @Module({
   imports: [
     DatabaseModule,
-    UsersModule,
+    forwardRef(() => UsersModule),
     ConfigModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
@@ -41,7 +42,13 @@ interface EnvConfig {
     RedisModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, TokenBlacklistService, JwtAuthGuard],
-  exports: [AuthService, JwtModule],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    TokenBlacklistService,
+    JwtAuthGuard,
+    TokenBlacklistGuard,
+  ],
+  exports: [AuthService, JwtModule, TokenBlacklistGuard],
 })
 export class AuthModule {}

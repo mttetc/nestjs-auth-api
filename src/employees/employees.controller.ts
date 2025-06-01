@@ -8,11 +8,15 @@ import {
   Post,
   Query,
   Ip,
+  UseGuards,
 } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 import { EmployeesService } from './employees.service';
 import { LoggerService } from '@/logger/logger.service';
+import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
+import { TokenBlacklistGuard } from '@/auth/guards/token-blacklist.guard';
 
+@UseGuards(JwtAuthGuard, TokenBlacklistGuard)
 @Controller('employees')
 export class EmployeesController {
   constructor(private readonly employeesService: EmployeesService) {}
