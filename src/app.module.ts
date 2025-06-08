@@ -8,7 +8,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { LoggerModule } from './logger/logger.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { securityConfig } from './common/config/security.config';
 
 @Module({
   imports: [
@@ -17,11 +18,37 @@ import { ConfigModule } from '@nestjs/config';
     }),
     DatabaseModule,
     EmployeesModule,
-    ThrottlerModule.forRoot([
-      { name: 'short', ttl: 1000, limit: 1 },
-      { name: 'medium', ttl: 10000, limit: 10 },
-      { name: 'long', ttl: 60000, limit: 100 },
-    ]),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: () => {
+        const security = securityConfig();
+        return {
+          throttlers: [
+            {
+              name: 'short',
+              ttl: security.rateLimiting.short.ttl,
+              limit: security.rateLimiting.short.limit,
+            },
+            {
+              name: 'medium',
+              ttl: security.rateLimiting.medium.ttl,
+              limit: security.rateLimiting.medium.limit,
+            },
+            {
+              name: 'long',
+              ttl: security.rateLimiting.long.ttl,
+              limit: security.rateLimiting.long.limit,
+            },
+            {
+              name: 'auth',
+              ttl: security.rateLimiting.auth.ttl,
+              limit: security.rateLimiting.auth.limit,
+            },
+          ],
+        };
+      },
+    }),
     LoggerModule,
     AuthModule,
     UsersModule,
