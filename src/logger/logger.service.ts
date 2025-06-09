@@ -19,7 +19,10 @@ export class LoggerService extends ConsoleLogger {
     super(context);
     this.logDir = path.join(process.cwd(), 'logs');
     this.logFile = this.getLogFileName();
-    void this.initializeLogDirectory();
+    // Initialize log directory synchronously to ensure it exists immediately
+    this.initializeLogDirectory().catch((error) => {
+      console.error('Failed to initialize log directory:', error);
+    });
   }
 
   private getLogFileName(): string {
@@ -45,6 +48,9 @@ export class LoggerService extends ConsoleLogger {
       if (currentLogFile !== this.logFile) {
         this.logFile = currentLogFile;
       }
+
+      // Ensure log directory exists before writing
+      await fsPromises.mkdir(this.logDir, { recursive: true });
 
       const logString = JSON.stringify(entry) + '\n';
       await fsPromises.appendFile(this.logFile, logString);

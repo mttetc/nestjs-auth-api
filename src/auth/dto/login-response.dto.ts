@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'generated/prisma';
 
-export class UserResponseDto implements Pick<User, 'id' | 'email'> {
+export class AuthUserDto implements Pick<User, 'id' | 'email'> {
   @ApiProperty({
     description: 'User ID',
     example: 1,
@@ -24,7 +24,7 @@ export class LoginResponseDto {
 
   @ApiProperty({
     description: 'User information',
-    type: UserResponseDto,
+    type: AuthUserDto,
   })
-  user: UserResponseDto;
+  user: AuthUserDto;
 }
