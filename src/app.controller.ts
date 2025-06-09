@@ -1,23 +1,38 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-import { SkipThrottle } from './common/decorators/skip-throttle.decorator';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
+@ApiTags('Application')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
-  @Get('health')
-  @SkipThrottle() // Health checks shouldn't be rate limited
-  healthCheck() {
+  @ApiOperation({
+    summary: 'API information',
+    description: 'Returns basic information about the API',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'API information',
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', example: 'NestJS REST API' },
+        version: { type: 'string', example: '1.0.0' },
+        description: {
+          type: 'string',
+          example: 'A robust REST API built with NestJS',
+        },
+        documentation: { type: 'string', example: '/api' },
+        health: { type: 'string', example: '/health' },
+      },
+    },
+  })
+  getApiInfo(): object {
     return {
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
+      name: 'NestJS REST API',
+      version: process.env.npm_package_version || '1.0.0',
+      description: 'A robust REST API built with NestJS',
+      documentation: '/api',
+      health: '/health',
     };
   }
 }
