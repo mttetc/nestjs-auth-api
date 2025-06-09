@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "redis:cli": "dotenv -e .env -- bash -c 'redis-cli -h $REDIS_HOST -p $REDIS_PORT -a $REDIS_PASSWORD -n $REDIS_DB'"
+    "redis:cli": "dotenv -e .env -- redis-cli -h \"$REDIS_HOST\" -p \"$REDIS_PORT\" -a \"$REDIS_PASSWORD\" -n \"$REDIS_DB\""
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -29,6 +29,7 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.0",
+    "@nestjs/terminus": "^11.0.0",
     "@nestjs/throttler": "^6.4.0",
     "@prisma/client": "^6.8.2",
     "@types/cookie-parser": "^1.4.8",
