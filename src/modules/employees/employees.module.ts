@@ -1,8 +1,8 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { EmployeesController } from './employees.controller';
-import { DatabaseModule } from 'src/database/database.module';
-import { AuthModule } from '@/auth/auth.module';
+import { DatabaseModule } from '@/modules/database/database.module';
+import { AuthModule } from '@/modules/auth/auth.module';
 
 @Module({
   imports: [DatabaseModule, forwardRef(() => AuthModule)],

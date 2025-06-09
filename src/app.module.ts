@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { DatabaseModule } from './database/database.module';
-import { EmployeesModule } from './employees/employees.module';
+import { DatabaseModule } from './modules/database/database.module';
+import { EmployeesModule } from './modules/employees/employees.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
-import { LoggerModule } from './logger/logger.module';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { LoggerModule } from './modules/logger/logger.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { securityConfig } from './common/config/security.config';
-import { HealthModule } from './health/health.module';
+import { securityConfig } from './shared/config/security.config';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [

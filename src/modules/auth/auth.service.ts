@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
 import { Prisma } from 'generated/prisma';
-import { UsersService } from '@/users/users.service';
+import { UsersService } from '@/modules/users/users.service';
 import { TokenBlacklistService } from './token-blacklist.service';
 import { JwtPayloadDto } from './dto/jwt-payload.dto';
 import { User } from 'generated/prisma';

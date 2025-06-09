@@ -15,7 +15,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request } from 'express';
 import { Throttle } from '@nestjs/throttler';
-import { securityConfig } from '../common/config/security.config';
+import { securityConfig } from '../../shared/config/security.config';
 import {
   ApiTags,
   ApiOperation,

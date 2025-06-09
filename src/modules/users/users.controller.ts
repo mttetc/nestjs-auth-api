@@ -10,11 +10,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { LoggerService } from '@/logger/logger.service';
-import { JwtAuthGuard } from '@/auth/guards/jwt-auth.guard';
-import { TokenBlacklistGuard } from '@/auth/guards/token-blacklist.guard';
+import { LoggerService } from '@/modules/logger/logger.service';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
+import { TokenBlacklistGuard } from '@/modules/auth/guards/token-blacklist.guard';
 import { Throttle } from '@nestjs/throttler';
-import { securityConfig } from '../common/config/security.config';
+import { securityConfig } from '../../shared/config/security.config';
 import {
   ApiTags,
   ApiOperation,

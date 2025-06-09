@@ -7,10 +7,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
-import { LoggerService } from './logger/logger.service';
-import { AllExceptionsFilter } from './all-exceptions.filter';
-import { SecurityHeadersMiddleware } from './common/middleware/security-headers.middleware';
-import { securityConfig } from './common/config/security.config';
+import { LoggerService } from './modules/logger/logger.service';
+import { AllExceptionsFilter } from './shared/all-exceptions.filter';
+import { SecurityHeadersMiddleware } from './shared/middleware/security-headers.middleware';
+import { securityConfig } from './shared/config/security.config';
 
 async function bootstrap() {
   // Initialize NestJS application
