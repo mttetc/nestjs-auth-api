@@ -10,11 +10,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { LoggerService } from '@/modules/logger/logger.service';
-import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
-import { TokenBlacklistGuard } from '@/modules/auth/guards/token-blacklist.guard';
+import { LoggerService } from '@/core/logger/logger.service';
+import { JwtAuthGuard } from '@/shared/guards/jwt-auth.guard';
+import { TokenBlacklistGuard } from '@/shared/guards/token-blacklist.guard';
 import { Throttle } from '@nestjs/throttler';
-import { securityConfig } from '../../shared/config/security.config';
+import { securityConfig } from '@/shared/config/security.config';
 import {
   ApiTags,
   ApiOperation,
@@ -22,9 +22,9 @@ import {
   ApiBearerAuth,
   ApiParam,
 } from '@nestjs/swagger';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserResponseDto } from './dto/user-response.dto';
+import { CreateUserDto } from '@/modules/users/dto/create-user.dto';
+import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
+import { UserResponseDto } from '@/modules/users/dto/user-response.dto';
 
 // Get security config for decorators
 const security = securityConfig();

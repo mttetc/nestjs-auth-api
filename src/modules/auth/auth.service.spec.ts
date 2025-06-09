@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './auth.service';
-import { UsersService } from '@/users/users.service';
+import { AuthService } from '@/modules/auth/auth.service';
+import { UsersService } from '@/modules/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { TokenBlacklistService } from './token-blacklist.service';
+import { TokenBlacklistService } from '@/modules/auth/token-blacklist.service';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { Response } from 'express';
 import * as bcrypt from 'bcrypt';

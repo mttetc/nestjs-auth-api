@@ -2,16 +2,16 @@ import { Module, forwardRef } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UsersModule } from '../users/users.module';
-import { TokenBlacklistService } from './token-blacklist.service';
-import { RedisModule } from '../redis/redis.module';
+import { UsersModule } from '@/modules/users/users.module';
+import { TokenBlacklistService } from '@/modules/auth/token-blacklist.service';
+import { RedisModule } from '@/core/redis/redis.module';
 
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
-import { DatabaseModule } from '../database/database.module';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { TokenBlacklistGuard } from './guards/token-blacklist.guard';
+import { AuthController } from '@/modules/auth/auth.controller';
+import { AuthService } from '@/modules/auth/auth.service';
+import { JwtStrategy } from '@/modules/auth/jwt.strategy';
+import { DatabaseModule } from '@/core/database/database.module';
+import { JwtAuthGuard } from '@/shared/guards/jwt-auth.guard';
+import { TokenBlacklistGuard } from '@/shared/guards/token-blacklist.guard';
 
 interface EnvConfig {
   JWT_SECRET: string;

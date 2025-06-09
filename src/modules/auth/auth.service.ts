@@ -9,10 +9,10 @@ import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
 import { Prisma } from 'generated/prisma';
 import { UsersService } from '@/modules/users/users.service';
-import { TokenBlacklistService } from './token-blacklist.service';
-import { JwtPayloadDto } from './dto/jwt-payload.dto';
+import { TokenBlacklistService } from '@/modules/auth/token-blacklist.service';
+import { JwtPayloadDto } from '@/modules/auth/dto/jwt-payload.dto';
 import { User } from 'generated/prisma';
-import { LoginResponseDto } from './dto/login-response.dto';
+import { LoginResponseDto } from '@/modules/auth/dto/login-response.dto';
 
 @Injectable()
 export class AuthService {

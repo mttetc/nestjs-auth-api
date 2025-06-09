@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { AuthService } from '../auth.service';
+import { AuthService } from '@/modules/auth/auth.service';
 
 @Injectable()
 export class TokenBlacklistGuard implements CanActivate {

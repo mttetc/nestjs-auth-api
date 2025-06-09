@@ -2,8 +2,8 @@ import { Controller, Get, Req } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HealthCheck } from '@nestjs/terminus';
 import { Request } from 'express';
-import { LoggerService } from '../logger/logger.service';
-import { HealthService } from './health.service';
+import { LoggerService } from '@/core/logger/logger.service';
+import { HealthService } from '@/modules/health/health.service';
 
 @ApiTags('health')
 @Controller('health')

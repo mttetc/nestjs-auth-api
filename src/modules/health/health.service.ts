@@ -5,8 +5,8 @@ import {
   MemoryHealthIndicator,
   DiskHealthIndicator,
 } from '@nestjs/terminus';
-import { DatabaseService } from '../database/database.service';
-import { LoggerService } from '../logger/logger.service';
+import { DatabaseService } from '@/core/database/database.service';
+import { LoggerService } from '@/core/logger/logger.service';
 
 @Injectable()
 export class HealthService {

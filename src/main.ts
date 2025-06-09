@@ -6,11 +6,11 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 
-import { AppModule } from './app.module';
-import { LoggerService } from './modules/logger/logger.service';
-import { AllExceptionsFilter } from './shared/all-exceptions.filter';
-import { SecurityHeadersMiddleware } from './shared/middleware/security-headers.middleware';
-import { securityConfig } from './shared/config/security.config';
+import { AppModule } from '@/app.module';
+import { LoggerService } from '@/core/logger/logger.service';
+import { AllExceptionsFilter } from '@/shared/all-exceptions.filter';
+import { SecurityHeadersMiddleware } from '@/shared/middleware/security-headers.middleware';
+import { securityConfig } from '@/shared/config/security.config';
 
 async function bootstrap() {
   // Initialize NestJS application

@@ -10,10 +10,10 @@ import {
   Ip,
   UseGuards,
 } from '@nestjs/common';
-import { EmployeesService } from './employees.service';
-import { LoggerService } from '@/modules/logger/logger.service';
-import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
-import { TokenBlacklistGuard } from '@/modules/auth/guards/token-blacklist.guard';
+import { EmployeesService } from '@/modules/employees/employees.service';
+import { LoggerService } from '@/core/logger/logger.service';
+import { JwtAuthGuard } from '@/shared/guards/jwt-auth.guard';
+import { TokenBlacklistGuard } from '@/shared/guards/token-blacklist.guard';
 import {
   ApiTags,
   ApiOperation,
@@ -22,9 +22,9 @@ import {
   ApiParam,
   ApiQuery,
 } from '@nestjs/swagger';
-import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { EmployeeResponseDto } from './dto/employee-response.dto';
+import { CreateEmployeeDto } from '@/modules/employees/dto/create-employee.dto';
+import { UpdateEmployeeDto } from '@/modules/employees/dto/update-employee.dto';
+import { EmployeeResponseDto } from '@/modules/employees/dto/employee-response.dto';
 
 @UseGuards(JwtAuthGuard, TokenBlacklistGuard)
 @ApiBearerAuth('JWT-auth')

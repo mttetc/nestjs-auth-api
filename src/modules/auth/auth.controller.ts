@@ -8,14 +8,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { LoginResponseDto } from './dto/login-response.dto';
-import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
+import { AuthService } from '@/modules/auth/auth.service';
+import { JwtAuthGuard } from '@/shared/guards/jwt-auth.guard';
+import { LoginResponseDto } from '@/modules/auth/dto/login-response.dto';
+import { RegisterDto } from '@/modules/auth/dto/register.dto';
+import { LoginDto } from '@/modules/auth/dto/login.dto';
 import { Request } from 'express';
 import { Throttle } from '@nestjs/throttler';
-import { securityConfig } from '../../shared/config/security.config';
+import { securityConfig } from '@/shared/config/security.config';
 import {
   ApiTags,
   ApiOperation,

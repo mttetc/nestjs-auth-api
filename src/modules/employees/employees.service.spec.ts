@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EmployeesService } from './employees.service';
-import { DatabaseService } from '@/modules/database/database.service';
+import { EmployeesService } from '@/modules/employees/employees.service';
+import { DatabaseService } from '@/core/database/database.service';
 
 describe('EmployeesService', () => {
   let service: EmployeesService;
