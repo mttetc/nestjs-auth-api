@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -21,10 +22,12 @@ import {
   ApiResponse,
   ApiBearerAuth,
   ApiParam,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { CreateUserDto } from '@/modules/users/dto/create-user.dto';
 import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
 import { UserResponseDto } from '@/modules/users/dto/user-response.dto';
+import { QueryParamsDto } from '@/shared/dto/query-params.dto';
 
 // Get security config for decorators
 const security = securityConfig();
@@ -63,9 +66,14 @@ export class UsersController {
     },
   })
   @Get()
-  findAll(@Ip() ip: string) {
+  @ApiQuery({
+    name: 'query',
+    type: QueryParamsDto,
+    required: false,
+  })
+  findAll(@Ip() ip: string, @Query() query: QueryParamsDto) {
     this.logger.log(`Finding all users from ${ip}`, `UsersController ${ip}`);
-    return this.usersService.findAll();
+    return this.usersService.findAll(query);
   }
 
   @UseGuards(JwtAuthGuard, TokenBlacklistGuard)
@@ -85,9 +93,9 @@ export class UsersController {
     },
   })
   @Get(':id')
-  findOneById(@Param('id') id: number, @Ip() ip: string) {
+  findById(@Param('id') id: number, @Ip() ip: string) {
     this.logger.log(`Finding user ${id} from ${ip}`, `UsersController ${ip}`);
-    return this.usersService.findOneById(id);
+    return this.usersService.findOne({ id });
   }
 
   @UseGuards(JwtAuthGuard, TokenBlacklistGuard)
@@ -101,12 +109,12 @@ export class UsersController {
   })
   @ApiResponse({ status: 404, description: 'User not found' })
   @Get('email/:email')
-  findOneByEmail(@Param('email') email: string, @Ip() ip: string) {
+  findByEmail(@Param('email') email: string, @Ip() ip: string) {
     this.logger.log(
       `Finding user ${email} from ${ip}`,
       `UsersController ${ip}`,
     );
-    return this.usersService.findOneByEmail(email);
+    return this.usersService.findOne({ email });
   }
 
   @UseGuards(JwtAuthGuard, TokenBlacklistGuard)

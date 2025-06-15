@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 import { DatabaseService } from '@/core/database/database.service';
+import { EmployeesQueryDto } from './dto/employee-query.dto';
 
 @Injectable()
 export class EmployeesService {
@@ -12,15 +13,37 @@ export class EmployeesService {
     });
   }
 
-  async findAll(role?: 'INTERN' | 'ENGINEER' | 'ADMIN') {
-    if (role) {
-      return this.databaseService.employee.findMany({
-        where: {
-          role,
-        },
-      });
-    }
-    return this.databaseService.employee.findMany();
+  async findAll(query: EmployeesQueryDto) {
+    const { role, page, limit, sortBy, sortOrder, search } = query;
+    const skip = (page - 1) * limit;
+
+    const where: Prisma.EmployeeWhereInput = {
+      ...(search && {
+        OR: [
+          { name: { contains: search, mode: 'insensitive' } },
+          { email: { contains: search, mode: 'insensitive' } },
+        ],
+      }),
+      ...(role && { role }),
+    };
+
+    const [data, total] = await Promise.all([
+      this.databaseService.employee.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { [sortBy]: sortOrder },
+      }),
+      this.databaseService.employee.count({ where }),
+    ]);
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: number) {

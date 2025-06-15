@@ -1,30 +1,32 @@
+import { LoggerService } from '@/core/logger/logger.service';
+import { CreateEmployeeDto } from '@/modules/employees/dto/create-employee.dto';
+import { EmployeeResponseDto } from '@/modules/employees/dto/employee-response.dto';
+import { UpdateEmployeeDto } from '@/modules/employees/dto/update-employee.dto';
+import { EmployeesService } from '@/modules/employees/employees.service';
+import { JwtAuthGuard } from '@/shared/guards/jwt-auth.guard';
+import { TokenBlacklistGuard } from '@/shared/guards/token-blacklist.guard';
 import {
   Body,
   Controller,
   Delete,
   Get,
+  Ip,
   Param,
   Patch,
   Post,
   Query,
-  Ip,
   UseGuards,
 } from '@nestjs/common';
-import { EmployeesService } from '@/modules/employees/employees.service';
-import { LoggerService } from '@/core/logger/logger.service';
-import { JwtAuthGuard } from '@/shared/guards/jwt-auth.guard';
-import { TokenBlacklistGuard } from '@/shared/guards/token-blacklist.guard';
 import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
   ApiBearerAuth,
+  ApiOperation,
   ApiParam,
   ApiQuery,
+  ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
-import { CreateEmployeeDto } from '@/modules/employees/dto/create-employee.dto';
-import { UpdateEmployeeDto } from '@/modules/employees/dto/update-employee.dto';
-import { EmployeeResponseDto } from '@/modules/employees/dto/employee-response.dto';
+import { EmployeesQueryDto } from './dto/employee-query.dto';
+import { Role } from 'generated/prisma';
 
 @UseGuards(JwtAuthGuard, TokenBlacklistGuard)
 @ApiBearerAuth('JWT-auth')
@@ -49,25 +51,23 @@ export class EmployeesController {
   @Get()
   @ApiOperation({ summary: 'Get all employees' })
   @ApiQuery({
-    name: 'role',
-    enum: ['INTERN', 'ENGINEER', 'ADMIN'],
+    name: 'query',
+    enum: Role,
     required: false,
     description: 'Filter by employee role',
+    type: EmployeesQueryDto,
   })
   @ApiResponse({
     status: 200,
     description: 'List of employees',
     type: [EmployeeResponseDto],
   })
-  findAll(
-    @Ip() ip: string,
-    @Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN',
-  ) {
+  findAll(@Ip() ip: string, @Query() query: EmployeesQueryDto) {
     this.logger.log(
-      `Finding all employees with role ${role ? role : 'no role'} from ${ip}`,
+      `Finding all employees with role ${query.role ? query.role : 'no role'} from ${ip}`,
       `EmployeesController ${ip}`,
     );
-    return this.employeesService.findAll(role);
+    return this.employeesService.findAll(query);
   }
 
   @Get(':id')
